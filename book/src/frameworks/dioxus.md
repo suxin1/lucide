@@ -5,11 +5,7 @@ Implementation of the Lucide icon library for [Dioxus](https://dioxuslabs.com/) 
 ## Installation
 
 ```shell
-# Selective Icons
-cargo add lucide-dioxus --features camera,file-image,moon,sun
-
-# All Icons
-cargo add lucide-dioxus --features full
+cargo add lucide-dioxus
 ```
 
 -   [View on crates.io](https://crates.io/crates/lucide-dioxus)

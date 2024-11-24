@@ -7,11 +7,7 @@ Implementation of the Lucide icon library for [Yew](https://yew.rs/) application
 Install the icons from your command line.
 
 ```shell
-# Selective Icons
-cargo add lucide-yew --features camera,file-image,moon,sun
-
-# All Icons
-cargo add lucide-yew --features full
+cargo add lucide-yew
 ```
 
 -   [View on crates.io](https://crates.io/crates/lucide-yew)

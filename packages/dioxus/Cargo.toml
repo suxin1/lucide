@@ -11,7 +11,3 @@ version.workspace = true
 
 [dependencies]
 dioxus.workspace = true
-
-[features]
-default = []
-full = []

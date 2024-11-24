@@ -7,11 +7,7 @@ Implementation of the Lucide icon library for [Leptos](https://leptos.dev/) appl
 Install the icons from your command line.
 
 ```shell
-# Selective Icons
-cargo add lucide-leptos --features camera,file-image,moon,sun
-
-# All Icons
-cargo add lucide-leptos --features full
+cargo add lucide-leptos
 ```
 
 -   [View on crates.io](https://crates.io/crates/lucide-leptos)

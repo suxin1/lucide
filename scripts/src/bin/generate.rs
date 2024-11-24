@@ -69,7 +69,6 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     for framework in &frameworks {
         generate_lib(&**framework, &modules)?;
-        generate_features(&**framework, &modules)?;
         generate_example(&**framework, &component_names)?;
 
         framework.format(
@@ -148,25 +147,13 @@ fn generate_lib(framework: &dyn Framework, modules: &[String]) -> Result<(), Box
 
     let output_modules = modules
         .iter()
-        .map(|module| {
-            format!(
-                "#[cfg(feature = \"{}\")]\nmod {};",
-                module.trim_end_matches("_icon").to_case(Case::Kebab),
-                sanitize_identifier(module.as_str())
-            )
-        })
+        .map(|module| format!("mod {};", sanitize_identifier(module.as_str())))
         .collect::<Vec<String>>()
         .join("\n");
 
     let output_uses = modules
         .iter()
-        .map(|module| {
-            format!(
-                "#[cfg(feature = \"{}\")]\npub use {}::*;",
-                module.trim_end_matches("_icon").to_case(Case::Kebab),
-                sanitize_identifier(module.as_str())
-            )
-        })
+        .map(|module| format!("pub use {}::*;", sanitize_identifier(module.as_str())))
         .collect::<Vec<String>>()
         .join("\n");
 
@@ -181,45 +168,6 @@ fn generate_lib(framework: &dyn Framework, modules: &[String]) -> Result<(), Box
     );
 
     fs::write(output_path, output)?;
-
-    Ok(())
-}
-
-fn generate_features(framework: &dyn Framework, modules: &[String]) -> Result<(), Box<dyn Error>> {
-    let output_path = Path::new("packages")
-        .join(framework.name())
-        .join("features.toml");
-
-    let output_features = modules
-        .iter()
-        .map(|module| {
-            format!(
-                "{} = []",
-                module.trim_end_matches("_icon").to_case(Case::Kebab)
-            )
-        })
-        .collect::<Vec<String>>()
-        .join("\n");
-
-    let output_full = modules
-        .iter()
-        .map(|module| {
-            format!(
-                "\"{}\"",
-                module.trim_end_matches("_icon").to_case(Case::Kebab)
-            )
-        })
-        .collect::<Vec<String>>()
-        .join(", ");
-
-    let output = format!(
-        "[features]\ndefault = []\n{}\nfull = [{}]\n",
-        output_features, output_full
-    );
-
-    fs::write(output_path, output)?;
-
-    // TODO: Replace features in Cargo.toml instead of writing to features.toml.
 
     Ok(())
 }
