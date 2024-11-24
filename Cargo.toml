@@ -1,0 +1,15 @@
+[workspace]
+members = ["packages/*", "scripts"]
+resolver = "2"
+
+[workspace.package]
+authors = ["Rust For Web <info@rustforweb.org>"]
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/RustForWeb/lucide"
+version = "0.0.1"
+
+[workspace.dependencies]
+dioxus = "0.5.6"
+leptos = "0.7.0-rc2"
+yew = "0.21.0"
