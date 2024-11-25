@@ -1,6 +1,6 @@
 <p align="center">
-    <a href="../../../../logo.svg">
-        <img src="../../../../logo.svg" width="300" height="200" alt="Rust Lucide Logo">
+    <a href="../../logo.svg">
+        <img src="../../logo.svg" width="300" height="200" alt="Rust Lucide Logo">
     </a>
 </p>
 
