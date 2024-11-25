@@ -1,7 +1,7 @@
 [package]
 name = "lucide-dioxus"
 description = "Dioxus port of Lucide."
-homepage = "https://lucide.rustforweb.org/dioxus.html"
+homepage = "https://lucide.rustforweb.org/frameworks/dioxus.html"
 
 authors.workspace = true
 edition.workspace = true

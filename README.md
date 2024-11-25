@@ -1,8 +1,8 @@
-<!-- <p align="center">
+<p align="center">
     <a href="./logo.svg">
         <img src="./logo.svg" width="300" height="200" alt="Rust Lucide Logo">
     </a>
-</p> -->
+</p>
 
 <h1 align="center">Rust Lucide</h1>
 
@@ -24,9 +24,9 @@ See [the Rust Lucide book](https://lucide.rustforweb.org/introduction.html#frame
 
 See [the Rust Lucide book](https://lucide.rustforweb.org).
 
-<!-- ## Credits
+## Credits
 
-The logo is a combination of the [Lucide logo](https://github.com/lucide-icons/lucide/blob/main/docs/public/logo-icon.svg) and [Ferris the Rustacean](https://rustacean.net/). -->
+The logo is a combination of the [Lucide logo](https://github.com/lucide-icons/lucide/blob/main/docs/public/logo-icon.svg) and [Ferris the Rustacean](https://rustacean.net/).
 
 ## License
 

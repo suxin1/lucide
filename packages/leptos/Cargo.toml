@@ -1,7 +1,7 @@
 [package]
 name = "lucide-leptos"
 description = "Leptos port of Lucide."
-homepage = "https://lucide.rustforweb.org/leptos.html"
+homepage = "https://lucide.rustforweb.org/frameworks/leptos.html"
 
 authors.workspace = true
 edition.workspace = true

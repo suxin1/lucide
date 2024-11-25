@@ -1,6 +1,6 @@
-<!-- <p align="center">
+<p align="center">
     <img src="./images/logo.svg" width="300" height="200" alt="Rust Lucide Logo">
-</p> -->
+</p>
 
 # Introduction
 

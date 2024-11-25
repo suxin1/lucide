@@ -1,7 +1,7 @@
 [package]
 name = "lucide-yew"
 description = "Yew port of Lucide."
-homepage = "https://lucide.rustforweb.org/yew.html"
+homepage = "https://lucide.rustforweb.org/frameworks/yew.html"
 
 authors.workspace = true
 edition.workspace = true

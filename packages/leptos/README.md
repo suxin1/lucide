@@ -1,8 +1,8 @@
-<!-- <p align="center">
+<p align="center">
     <a href="../../../../logo.svg">
         <img src="../../../../logo.svg" width="300" height="200" alt="Rust Lucide Logo">
     </a>
-</p> -->
+</p>
 
 <h1 align="center">Lucide Leptos</h1>
 
