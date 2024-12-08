@@ -5,7 +5,7 @@ use git2::Repository;
 use log::info;
 use scripts::{
     framework::Framework,
-    frameworks::{leptos::Leptos, yew::Yew},
+    frameworks::{dioxus::Dioxus, leptos::Leptos, yew::Yew},
 };
 use tempfile::tempdir;
 
@@ -15,7 +15,7 @@ const GIT_REF: &str = "0.460.1";
 fn main() -> Result<(), Box<dyn Error>> {
     env_logger::init();
 
-    let frameworks: [Box<dyn Framework>; 2] = [Box::new(Leptos), Box::new(Yew)];
+    let frameworks: [Box<dyn Framework>; 3] = [Box::new(Dioxus), Box::new(Leptos), Box::new(Yew)];
 
     let repository_path = tempdir()?;
     let repository_icons_path = repository_path.path().join("icons");
@@ -31,9 +31,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     info!("Generating icons.");
 
-    let mut modules = vec![];
-    let mut component_names = vec![];
-
+    let mut paths = vec![];
     for entry in fs::read_dir(repository_icons_path)? {
         let path = entry?.path();
 
@@ -45,8 +43,18 @@ fn main() -> Result<(), Box<dyn Error>> {
         let file_stem = file_path
             .file_stem()
             .expect("File stem should exist.")
-            .to_string_lossy();
+            .to_string_lossy()
+            .to_string();
 
+        paths.push((file_path, file_stem));
+    }
+
+    paths.sort_by_key(|(_, file_stem)| file_stem.clone());
+
+    let mut modules = vec![];
+    let mut component_names = vec![];
+
+    for (path, file_stem) in paths {
         let file_contents = fs::read_to_string(path)?;
 
         let module = file_stem.to_case(Case::Snake);

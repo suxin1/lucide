@@ -14,11 +14,30 @@ cargo add lucide-dioxus
 
 ## Usage
 
-TODO
+```rust,ignore
+use dioxus::prelude::*;
+use lucide_dioxus::Camera;
+
+#[component]
+fn App() -> Element {
+    rsx! {
+        Camera {
+            color: "red",
+            size: 48,
+        }
+    }
+}
+```
 
 ## Props
 
-TODO
+| Name                    | Type     | Default          |
+| ----------------------- | -------- | ---------------- |
+| `size`                  | `usize`  | `24`             |
+| `color`                 | `String` | `"currentColor"` |
+| `fill`                  | `String` | `"none"`         |
+| `stroke_width`          | `usize`  | `2`              |
+| `absolute_stroke_width` | `bool`   | `false`          |
 
 ## Icons
 

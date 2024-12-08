@@ -15,9 +15,6 @@ pub fn App() -> Element {
     }
 
     rsx! {
-        div {
-            class: "w-full h-full flex justify-center items-center",
-            {children.iter()}
-        }
+        div { class: "w-full h-full flex justify-center items-center", {children.iter()} }
     }
 }

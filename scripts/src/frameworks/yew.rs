@@ -150,8 +150,15 @@ impl Framework for Yew {
         Command::new("cargo")
             .arg("fmt")
             .arg("-p")
-            .arg(package)
+            .arg(&package)
             .env("RUSTFMT", "yew-fmt")
+            .status()?
+            .exit_ok()?;
+
+        Command::new("cargo")
+            .arg("fmt")
+            .arg("-p")
+            .arg(&package)
             .status()?
             .exit_ok()?;
 
