@@ -18,6 +18,13 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Generate GitHub App token
+              id: app-token
+              uses: getsentry/action-github-app-token@v3
+              with:
+                  app_id: ${{ secrets.APP_ID }}
+                  private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
             - name: Checkout
               uses: actions/checkout@v4
 
@@ -41,21 +48,31 @@ jobs:
 
             - name: Extract version
               id: extract-version
-              run: echo "VERSION=$(toml get Cargo.toml workspace.package.version --raw)" >> "$GITHUB_OUTPUT"
+              run: echo "VERSION=v$(toml get Cargo.toml workspace.package.version --raw)" >> "$GITHUB_OUTPUT"
+
+            - name: Add changes
+              run: git add **/Cargo.{toml,lock}
 
             - name: Commit
-              uses: EndBug/add-and-commit@v9
+              uses: dsanders11/github-app-commit-action@v1
               with:
-                  default_author: user_info
-                  message: 'v${{ steps.extract-version.outputs.VERSION }}'
-                  tag: 'v${{ steps.extract-version.outputs.VERSION }}'
+                  message: ${{ steps.extract-version.outputs.VERSION }}
+                  token: ${{ steps.app-token.outputs.token }}
 
-            - name: Publish
-              run: cargo workspaces publish --publish-as-is --token "${{ secrets.CRATES_IO_TOKEN }}"
+            - name: Tag
+              uses: bruno-fs/repo-tagger@1.0.0
+              with:
+                  tag: ${{ steps.extract-version.outputs.VERSION }}
+              env:
+                  GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
 
             - name: Release
               uses: softprops/action-gh-release@v2
               with:
                   generate_release_notes: true
                   make_latest: true
-                  tag_name: 'v${{ steps.extract-version.outputs.VERSION }}'
+                  tag_name: ${{ steps.extract-version.outputs.VERSION }}
+                  token: ${{ steps.app-token.outputs.token }}
+
+            - name: Publish
+              run: cargo workspaces publish --publish-as-is --token "${{ secrets.CRATES_IO_TOKEN }}"
