@@ -1,0 +1,61 @@
+name: Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            bump:
+                description: 'Bump version by semver keyword.'
+                required: true
+                type: choice
+                options:
+                    - patch
+                    - minor
+                    - major
+
+jobs:
+    release:
+        name: Release
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Rust toolchain
+              run: rustup toolchain install nightly --no-self-update --profile default --target wasm32-unknown-unknown
+
+            - name: Set up Rust cache
+              uses: swatinem/rust-cache@v2
+              with:
+                  cache-on-failure: true
+                  save-if: ${{ github.ref == 'refs/heads/main' }}
+
+            - name: Install Cargo Binary Install
+              uses: cargo-bins/cargo-binstall@main
+
+            - name: Install crates
+              run: cargo binstall --force -y cargo-workspaces toml-cli
+
+            - name: Bump version
+              run: cargo workspaces version --all --no-git-commit --yes ${{ inputs.bump }}
+
+            - name: Extract version
+              id: extract-version
+              run: echo "VERSION=$(toml get Cargo.toml workspace.package.version --raw)" >> "$GITHUB_OUTPUT"
+
+            - name: Commit
+              uses: EndBug/add-and-commit@v9
+              with:
+                  default_author: user_info
+                  message: 'v${{ steps.extract-version.outputs.VERSION }}'
+                  tag: 'v${{ steps.extract-version.outputs.VERSION }}'
+
+            - name: Publish
+              run: cargo workspaces publish --publish-as-is --token "${{ secrets.CRATES_IO_TOKEN }}"
+
+            - name: Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  generate_release_notes: true
+                  make_latest: true
+                  tag_name: 'v${{ steps.extract-version.outputs.VERSION }}'
