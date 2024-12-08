@@ -6,8 +6,6 @@ use quote::{quote, ToTokens};
 use roxmltree::{Attribute, Children, Document, Node, NodeType};
 
 use crate::framework::Framework;
-
-#[allow(dead_code)]
 pub struct Dioxus;
 
 impl Framework for Dioxus {
