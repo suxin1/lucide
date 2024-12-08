@@ -51,7 +51,7 @@ jobs:
               run: echo "VERSION=v$(toml get Cargo.toml workspace.package.version --raw)" >> "$GITHUB_OUTPUT"
 
             - name: Add changes
-              run: git add **/Cargo.{toml,lock}
+              run: git add .
 
             - name: Commit
               uses: dsanders11/github-app-commit-action@v1
